@@ -12,6 +12,6 @@ app.get("/health", (req, res) => {
     res.send("API is running");
 })
 
-app.use("/api/v1", authRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 module.exports = app;
