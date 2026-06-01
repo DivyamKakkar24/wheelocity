@@ -70,7 +70,7 @@ const login = async (req, res) => {
                 email: user.email
             },
             process.env.JWT_SECRET,
-            { expiresIn: "1d" }
+            { expiresIn: "1h" }
         );
 
         return res.status(200).json({
@@ -87,4 +87,10 @@ const login = async (req, res) => {
     }
 }
 
-module.exports = { register, login };
+const logout = (req, res) => {
+    return res.status(200).json({
+        message: "Logged out successfully",
+    });
+}
+
+module.exports = { register, login, logout };
