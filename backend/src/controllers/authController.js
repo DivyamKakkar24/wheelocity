@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const pool = require('../config/db');
+const { findUserByEmail, createUser } = require('../models/userModel');
 
 const register = async (req, res) => {
     try {
@@ -9,26 +9,13 @@ const register = async (req, res) => {
         if (!name || !email || !password)
             return res.status(400).json({ message: "All fields required" });
 
-        const [users] = await pool.query(
-            "SELECT id FROM users WHERE email = ?",
-            [email]
-        );
+        const users = await findUserByEmail(email);
 
         if (users.length > 0)
             return res.status(409).json({ message: "Email already exists" });
 
         const hashedPassword = await bcrypt.hash(password, 12);
-
-        const [result] = await pool.query(
-            `INSERT INTO users
-            (name, email, password)
-            VALUES (?, ?, ?)`,
-            [
-                name,
-                email,
-                hashedPassword
-            ]
-        );
+        const result = await createUser({ name, email, password: hashedPassword });
 
         return res.status(201).json({
             message: "User registered successfully",
@@ -50,10 +37,7 @@ const login = async (req, res) => {
         if (!email || !password)
             return res.status(400).json({ message: "Email and password required" });
 
-        const [users] = await pool.query(
-            "SELECT * FROM users WHERE email = ?",
-            [email]
-        );
+        const users = await findUserByEmail(email);
 
         if (users.length === 0)
             return res.status(401).json({ message: "Invalid credentials" });
