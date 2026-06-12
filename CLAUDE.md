@@ -4,30 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Wheelocity is a used vehicle marketplace (MVP, Phase 0). Users can register, log in, and will eventually list and browse vehicles. The backend is live; the frontend is planned. See `docs/` for full feature specs and roadmap.
+This is a used-vehicle marketplace full-stack application. The backend is in progress; the frontend is planned.
 
 ## Tech Stack
 
 **Backend:**
-- Node.js + Express 5 (CommonJS modules) — note: Express v5 has breaking changes from v4
+- Node.js + Express 5 (CommonJS modules)
 - MySQL 2 (promise-based, connection pooling via `mysql2/promise`)
-- JWT (1-hour expiry) + bcrypt (12 salt rounds) for auth
+- JWT + bcrypt for auth
 - CORS, dotenv
-
-**Development:** Nodemon (`npm run dev`)
 
 **Frontend:** Directory exists, not yet initialized.
 
 ## Development Commands
 
-All commands run from `backend/`:
+Commands for `backend/`:
 
 ```bash
 npm install       # Install dependencies
-npm run dev       # Start server with nodemon (PORT from .env)
+npm run dev       # Start server with nodemon
 ```
-
-No test framework is configured. The server reads `PORT`, `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, and `JWT_SECRET` from `backend/.env` (not in git).
 
 ## Architecture
 
@@ -45,15 +41,6 @@ backend/
     └── middleware/verifyToken.js  # JWT Bearer token verification → req.user
 ```
 
-### Current Endpoints
-
-**Auth** (`/api/v1/auth`):
-- `POST /register` — name, email, password → bcrypt hash → insert user
-- `POST /login` — email + password → bcrypt compare → JWT token response
-- `POST /logout` — returns success (stateless; no server-side session)
-
-**Health check** (`GET /health`) — protected by `verifyToken`; used to verify the API and a JWT token are working.
-
 ### Adding New Routes
 
 1. Create a route file in `src/routes/`, a controller in `src/controllers/`, and a model in `src/models/`.
@@ -61,3 +48,9 @@ backend/
 3. Wrap protected endpoints with `verifyToken` middleware.
 
 `src/services/` and `src/utils/` directories exist but are empty — use them for shared business logic and helpers.
+
+## Code Style Guidelines
+
+- Always follow coding best practices
+- Write concise comments for each code section
+- Use Biome for formatting/linting
