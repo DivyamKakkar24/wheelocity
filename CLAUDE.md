@@ -53,4 +53,4 @@ backend/
 
 - Always follow coding best practices
 - Write concise comments for each code section
-- Use Biome for formatting/linting
+- Run npm run lint after making changes
