@@ -33,4 +33,31 @@ const createVehicleListing = async ({
     return result;
 };
 
-module.exports = { createVehicleListing };
+const getVehicleListings = async ({ brand, fuel_type, vehicle_type, city, min_price, max_price, limit, offset }) => {
+    const conditions = [`status = 'active'`];
+    const params = [];
+
+    if (brand)        { conditions.push('brand = ?');        params.push(brand); }
+    if (fuel_type)    { conditions.push('fuel_type = ?');    params.push(fuel_type); }
+    if (vehicle_type) { conditions.push('vehicle_type = ?'); params.push(vehicle_type); }
+    if (city)         { conditions.push('city = ?');         params.push(city); }
+    if (min_price)    { conditions.push('price >= ?');       params.push(min_price); }
+    if (max_price)    { conditions.push('price <= ?');       params.push(max_price); }
+
+    const where = conditions.join(' AND ');
+
+    // Count total matching rows for pagination metadata
+    const [[{ total }]] = await pool.query(
+        `SELECT COUNT(*) AS total FROM vehicle_listings WHERE ${where}`,
+        params
+    );
+
+    const [rows] = await pool.query(
+        `SELECT * FROM vehicle_listings WHERE ${where} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
+        [...params, limit, offset]
+    );
+
+    return { total, rows };
+};
+
+module.exports = { createVehicleListing, getVehicleListings };

@@ -1,4 +1,4 @@
-const { createVehicleListing } = require('../models/vehicleModel');
+const { createVehicleListing, getVehicleListings } = require('../models/vehicleModel');
 
 const postVehicle = async (req, res) => {
     try {
@@ -58,4 +58,34 @@ const postVehicle = async (req, res) => {
     }
 };
 
-module.exports = { postVehicle };
+const getVehicles = async (req, res) => {
+    try {
+        const { brand, fuel_type, vehicle_type, city, min_price, max_price } = req.query;
+
+        const page  = Math.max(1, parseInt(req.query.page)  || 1);
+        const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 20));
+        const offset = (page - 1) * limit;
+
+        const { total, rows } = await getVehicleListings({
+            brand, fuel_type, vehicle_type, city, min_price, max_price, limit, offset,
+        });
+
+        return res.status(200).json({
+            data: rows,
+            pagination: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+            },
+        });
+    } catch (err) {
+        console.log("Error fetching vehicle listings: ", err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+};
+
+module.exports = { postVehicle, getVehicles };
