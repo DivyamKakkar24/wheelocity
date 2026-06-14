@@ -53,7 +53,10 @@ const findVehicleListings = async ({ brand, fuel_type, vehicle_type, city, min_p
     );
 
     const [rows] = await pool.query(
-        `SELECT * FROM vehicle_listings WHERE ${where} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
+        `SELECT id, vehicle_type, brand, model, variant, year, kilometers_driven,
+                ownership, fuel_type, transmission, price, is_negotiable,
+                city, state, description, status, created_at
+         FROM vehicle_listings WHERE ${where} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
         [...params, limit, offset]
     );
 
@@ -62,7 +65,10 @@ const findVehicleListings = async ({ brand, fuel_type, vehicle_type, city, min_p
 
 const findVehicleById = async ({ id }) => {
     const [[vehicle]] = await pool.query(
-        `SELECT * FROM vehicle_listings WHERE id = ? AND status = 'active'`, [id]
+        `SELECT id, vehicle_type, brand, model, variant, year, kilometers_driven,
+                ownership, fuel_type, transmission, price, is_negotiable,
+                city, state, description, status, created_at
+         FROM vehicle_listings WHERE id = ? AND status = 'active'`, [id]
     );
 
     return vehicle ?? null;
