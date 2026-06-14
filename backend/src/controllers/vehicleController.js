@@ -1,4 +1,4 @@
-const { createVehicleListing, getVehicleListings } = require('../models/vehicleModel');
+const { createVehicleListing, findVehicleListings, findVehicleById } = require('../models/vehicleModel');
 
 const postVehicle = async (req, res) => {
     try {
@@ -66,7 +66,7 @@ const getVehicles = async (req, res) => {
         const limit = Math.min(100, Math.max(1, parseInt(req.query.limit) || 20));
         const offset = (page - 1) * limit;
 
-        const { total, rows } = await getVehicleListings({
+        const { total, rows } = await findVehicleListings({
             brand, fuel_type, vehicle_type, city, min_price, max_price, limit, offset,
         });
 
@@ -88,4 +88,29 @@ const getVehicles = async (req, res) => {
     }
 };
 
-module.exports = { postVehicle, getVehicles };
+const getVehicleById = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id, 10);
+
+        if (isNaN(id) || id <= 0)
+            return res.status(400).json({ message: "Invalid vehicle ID" });
+
+        const vehicle = await findVehicleById({ id });
+
+        if (!vehicle)
+            return res.status(404).json({ message: "Vehicle not found" });
+
+        return res.status(200).json({
+            message: "Vehicle details fetched",
+            data: vehicle
+        });
+    } catch (err) {
+        console.log("Error fetching vehicle details: ", err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+}
+
+module.exports = { postVehicle, getVehicles, getVehicleById };

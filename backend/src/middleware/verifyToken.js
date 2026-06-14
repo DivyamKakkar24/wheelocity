@@ -19,6 +19,10 @@ const verifyToken = (req, res, next) => {
 
         next();
     } catch (err) {
+        if (process.env.NODE_ENV === 'development') {
+            console.error("JWT error: ", err.message);
+        }
+
         return res.status(401).json({
             message: "Invalid or expired token.",
         });

@@ -33,7 +33,7 @@ const createVehicleListing = async ({
     return result;
 };
 
-const getVehicleListings = async ({ brand, fuel_type, vehicle_type, city, min_price, max_price, limit, offset }) => {
+const findVehicleListings = async ({ brand, fuel_type, vehicle_type, city, min_price, max_price, limit, offset }) => {
     const conditions = [`status = 'active'`];
     const params = [];
 
@@ -60,4 +60,12 @@ const getVehicleListings = async ({ brand, fuel_type, vehicle_type, city, min_pr
     return { total, rows };
 };
 
-module.exports = { createVehicleListing, getVehicleListings };
+const findVehicleById = async ({ id }) => {
+    const [[vehicle]] = await pool.query(
+        `SELECT * FROM vehicle_listings WHERE id = ? AND status = 'active'`, [id]
+    );
+
+    return vehicle ?? null;
+}
+
+module.exports = { createVehicleListing, findVehicleListings, findVehicleById };
