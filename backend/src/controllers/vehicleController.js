@@ -1,4 +1,5 @@
 const { createVehicleListing, findVehicleListings, findVehicleById } = require('../models/vehicleModel');
+const logger = require('../utils/logger');
 
 const postVehicle = async (req, res) => {
     try {
@@ -50,7 +51,7 @@ const postVehicle = async (req, res) => {
             listingId: result.insertId,
         });
     } catch (err) {
-        console.log("Error posting vehicle listing: ", err);
+        logger.error("Error posting vehicle listing:", err);
 
         return res.status(500).json({
             message: "Internal server error",
@@ -80,7 +81,7 @@ const getVehicles = async (req, res) => {
             },
         });
     } catch (err) {
-        console.log("Error fetching vehicle listings: ", err);
+        logger.error("Error fetching vehicle listings:", err);
 
         return res.status(500).json({
             message: "Internal server error",
@@ -105,7 +106,7 @@ const getVehicleById = async (req, res) => {
             data: vehicle
         });
     } catch (err) {
-        console.log("Error fetching vehicle details: ", err);
+        logger.error("Error fetching vehicle details:", err);
 
         return res.status(500).json({
             message: "Internal server error",
