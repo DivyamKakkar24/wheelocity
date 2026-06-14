@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const logger = require('../utils/logger');
 
 // Protect Routes
 const verifyToken = (req, res, next) => {
@@ -19,6 +20,8 @@ const verifyToken = (req, res, next) => {
 
         next();
     } catch (err) {
+        logger.error("JWT error:", err);
+
         return res.status(401).json({
             message: "Invalid or expired token.",
         });

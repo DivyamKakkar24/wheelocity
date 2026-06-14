@@ -1,10 +1,11 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { findUserByEmail, createUser } = require('../models/userModel');
+const logger = require('../utils/logger');
 
 const register = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password } = req.body || {};
 
         if (!name || !email || !password)
             return res.status(400).json({ message: "All fields required" });
@@ -22,7 +23,7 @@ const register = async (req, res) => {
             userId: result.insertId
         });
     } catch (err) {
-        console.log("Error registering user: ", err);
+        logger.error("Error registering user:", err);
 
         return res.status(500).json({
             message: "Internal server error",
@@ -32,7 +33,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password } = req.body || {};
 
         if (!email || !password)
             return res.status(400).json({ message: "Email and password required" });
@@ -63,7 +64,7 @@ const login = async (req, res) => {
         });
 
     } catch (err) {
-        console.log("Error while logging in: ", err);
+        logger.error("Error while logging in:", err);
 
         return res.status(500).json({
             message: "Internal server error",
