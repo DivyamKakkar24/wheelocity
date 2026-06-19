@@ -63,6 +63,18 @@ const findVehicleListings = async ({ brand, fuel_type, vehicle_type, city, min_p
     return { total, rows };
 };
 
+const findVehicleListingsByUserId = async ({ userId }) => {
+    const [rows] = await pool.query(
+        `SELECT id, vehicle_type, brand, model, variant, year, kilometers_driven,
+                ownership, fuel_type, transmission, price, is_negotiable,
+                city, state, description, phone, status, created_at
+         FROM vehicle_listings WHERE user_id = ? ORDER BY created_at DESC`,
+        [userId]
+    );
+
+    return rows;
+};
+
 const findVehicleById = async ({ id }) => {
     const [[vehicle]] = await pool.query(
         `SELECT id, vehicle_type, brand, model, variant, year, kilometers_driven,
@@ -74,4 +86,4 @@ const findVehicleById = async ({ id }) => {
     return vehicle ?? null;
 }
 
-module.exports = { createVehicleListing, findVehicleListings, findVehicleById };
+module.exports = { createVehicleListing, findVehicleListings, findVehicleListingsByUserId, findVehicleById };
