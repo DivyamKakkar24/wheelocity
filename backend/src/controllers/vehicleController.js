@@ -1,4 +1,4 @@
-const { createVehicleListing, findVehicleListings, findVehicleById } = require('../models/vehicleModel');
+const { createVehicleListing, findVehicleListings, findVehicleById, findVehicleWithOwner, deleteVehicleListing } = require('../models/vehicleModel');
 const logger = require('../utils/logger');
 
 const postVehicle = async (req, res) => {
@@ -114,4 +114,33 @@ const getVehicleById = async (req, res) => {
     }
 }
 
-module.exports = { postVehicle, getVehicles, getVehicleById };
+const deleteVehicle = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id, 10);
+
+        if (isNaN(id) || id <= 0)
+            return res.status(400).json({ message: "Invalid vehicle ID" });
+
+        // Fetch the listing first to verify it exists and who owns it
+        const vehicle = await findVehicleWithOwner({ id });
+
+        if (!vehicle)
+            return res.status(404).json({ message: "Vehicle not found" });
+
+        // A user may only delete their own listing
+        if (vehicle.user_id !== req.user.userId)
+            return res.status(403).json({ message: "You are not allowed to delete this listing" });
+
+        await deleteVehicleListing({ id });
+
+        return res.status(200).json({ message: "Vehicle listing deleted successfully" });
+    } catch (err) {
+        logger.error("Error deleting vehicle listing:", err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+}
+
+module.exports = { postVehicle, getVehicles, getVehicleById, deleteVehicle };

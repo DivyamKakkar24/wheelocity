@@ -86,4 +86,22 @@ const findVehicleById = async ({ id }) => {
     return vehicle ?? null;
 }
 
-module.exports = { createVehicleListing, findVehicleListings, findVehicleListingsByUserId, findVehicleById };
+// Fetch a listing including its owner — used to authorize update/delete actions
+// May fetch more details later for the owner
+const findVehicleWithOwner = async ({ id }) => {
+    const [[vehicle]] = await pool.query(
+        `SELECT id, user_id, status FROM vehicle_listings WHERE id = ?`, [id]
+    );
+
+    return vehicle ?? null;
+}
+
+const deleteVehicleListing = async ({ id }) => {
+    const [result] = await pool.query(
+        `DELETE FROM vehicle_listings WHERE id = ?`, [id]
+    );
+
+    return result.affectedRows;
+}
+
+module.exports = { createVehicleListing, findVehicleListings, findVehicleListingsByUserId, findVehicleById, findVehicleWithOwner, deleteVehicleListing };
