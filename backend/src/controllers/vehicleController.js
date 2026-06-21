@@ -1,5 +1,22 @@
-const { createVehicleListing, findVehicleListings, findVehicleById, findVehicleWithOwner, deleteVehicleListing } = require('../models/vehicleModel');
+const { createVehicleListing, findVehicleListings, findVehicleListingsByUserId, findVehicleById, findVehicleWithOwner, deleteVehicleListing } = require('../models/vehicleModel');
 const logger = require('../utils/logger');
+
+const getMyListings = async (req, res) => {
+    try {
+        const listings = await findVehicleListingsByUserId({ userId: req.user.userId });
+
+        return res.status(200).json({
+            message: "Listings fetched successfully",
+            data: listings,
+        });
+    } catch (err) {
+        logger.error("Error fetching user's listings:", err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+};
 
 const postVehicle = async (req, res) => {
     try {
@@ -143,4 +160,4 @@ const deleteVehicle = async (req, res) => {
     }
 }
 
-module.exports = { postVehicle, getVehicles, getVehicleById, deleteVehicle };
+module.exports = { postVehicle, getVehicles, getMyListings, getVehicleById, deleteVehicle };
