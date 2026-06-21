@@ -1,4 +1,4 @@
-const { createVehicleListing, findVehicleListings, findVehicleListingsByUserId, findVehicleById, findVehicleWithOwner, deleteVehicleListing } = require('../models/vehicleModel');
+const { createVehicleListing, findVehicleListings, findVehicleListingsByUserId, findVehicleById, findVehicleWithOwner, updateVehicleListing, deleteVehicleListing } = require('../models/vehicleModel');
 const logger = require('../utils/logger');
 
 const getMyListings = async (req, res) => {
@@ -131,6 +131,69 @@ const getVehicleById = async (req, res) => {
     }
 }
 
+const editVehicle = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id, 10);
+
+        if (isNaN(id) || id <= 0)
+            return res.status(400).json({ message: "Invalid vehicle ID" });
+
+        const {
+            vehicle_type,
+            brand,
+            model,
+            variant,
+            year,
+            kilometers_driven,
+            ownership,
+            fuel_type,
+            transmission,
+            price,
+            is_negotiable,
+            city,
+            state,
+            description,
+            phone,
+            status,
+        } = req.body || {};
+
+        const fields = {
+            vehicle_type, brand, model, variant, year, kilometers_driven,
+            ownership, fuel_type, transmission, price, is_negotiable,
+            city, state, description, phone, status,
+        };
+
+        // Reject when no updatable field was provided
+        const hasUpdate = Object.values(fields).some(v => v !== undefined);
+
+        if (!hasUpdate)
+            return res.status(400).json({ message: "No fields to update" });
+
+        // Fetch the listing first to verify it exists and who owns it
+        const vehicle = await findVehicleWithOwner({ id });
+
+        if (!vehicle)
+            return res.status(404).json({ message: "Vehicle not found" });
+
+        // A user may only edit their own listing
+        if (vehicle.user_id !== req.user.userId)
+            return res.status(403).json({ message: "You are not allowed to edit this listing" });
+
+        const updated = await updateVehicleListing({ id, fields });
+
+        return res.status(200).json({
+            message: "Vehicle listing updated successfully",
+            data: updated,
+        });
+    } catch (err) {
+        logger.error("Error updating vehicle listing:", err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+};
+
 const deleteVehicle = async (req, res) => {
     try {
         const id = parseInt(req.params.id, 10);
@@ -160,4 +223,4 @@ const deleteVehicle = async (req, res) => {
     }
 }
 
-module.exports = { postVehicle, getVehicles, getMyListings, getVehicleById, deleteVehicle };
+module.exports = { postVehicle, getVehicles, getMyListings, getVehicleById, editVehicle, deleteVehicle };
