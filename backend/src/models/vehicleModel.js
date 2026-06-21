@@ -86,4 +86,58 @@ const findVehicleById = async ({ id }) => {
     return vehicle ?? null;
 }
 
-module.exports = { createVehicleListing, findVehicleListings, findVehicleListingsByUserId, findVehicleById };
+// Fetch a listing including its owner — used to authorize update/delete actions
+// May fetch more details later for the owner
+const findVehicleWithOwner = async ({ id }) => {
+    const [[vehicle]] = await pool.query(
+        `SELECT id, user_id, status FROM vehicle_listings WHERE id = ?`, [id]
+    );
+
+    return vehicle ?? null;
+}
+
+// Partial update of a listing — only the provided fields are changed
+const updateVehicleListing = async ({ id, fields: updates }) => {
+    const allowed = [
+        'vehicle_type', 'brand', 'model', 'variant', 'year', 'kilometers_driven',
+        'ownership', 'fuel_type', 'transmission', 'price', 'is_negotiable',
+        'city', 'state', 'description', 'phone', 'status',
+    ];
+
+    const fields = [];
+    const params = [];
+
+    for (const key of allowed) {
+        if (updates[key] !== undefined) {
+            fields.push(`${key} = ?`);
+            params.push(updates[key]);
+        }
+    }
+
+    if (fields.length > 0) {
+        await pool.query(
+            `UPDATE vehicle_listings SET ${fields.join(', ')} WHERE id = ?`,
+            [...params, id]
+        );
+    }
+
+    // Return the full updated row regardless of status
+    const [[vehicle]] = await pool.query(
+        `SELECT id, vehicle_type, brand, model, variant, year, kilometers_driven,
+                ownership, fuel_type, transmission, price, is_negotiable,
+                city, state, description, phone, status, created_at
+         FROM vehicle_listings WHERE id = ?`, [id]
+    );
+
+    return vehicle ?? null;
+};
+
+const deleteVehicleListing = async ({ id }) => {
+    const [result] = await pool.query(
+        `DELETE FROM vehicle_listings WHERE id = ?`, [id]
+    );
+
+    return result.affectedRows;
+}
+
+module.exports = { createVehicleListing, findVehicleListings, findVehicleListingsByUserId, findVehicleById, findVehicleWithOwner, updateVehicleListing, deleteVehicleListing };
