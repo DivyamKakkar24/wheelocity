@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
 
+const swaggerSpec = require('./config/swagger');
 const authRoutes = require('./routes/authRoutes');
 const vehicleRoutes = require('./routes/vehicleRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -14,6 +16,8 @@ app.get("/health", (req, res) => {
     // console.log(req.user);
     res.send("API is running");
 })
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/vehicle-listings", vehicleRoutes);
