@@ -1,0 +1,15 @@
+{
+  "auth": {
+    "loginSuccess": "Logged in successfully.",
+    "logoutSuccess": "Logged out successfully.",
+    "unauthorized": "Please log in to continue."
+  },
+  "vehicle": {
+    "createSuccess": "Vehicle listed successfully.",
+    "updateSuccess": "Vehicle updated successfully.",
+    "deleteSuccess": "Vehicle removed."
+  },
+  "generic": {
+    "error": "Something went wrong. Please try again."
+  }
+}
