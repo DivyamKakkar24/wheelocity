@@ -14,7 +14,15 @@ This is a used-vehicle marketplace full-stack application. The backend is in pro
 - JWT + bcrypt for auth
 - CORS, dotenv
 
-**Frontend:** Directory exists, not yet initialized.
+**Frontend:**
+- React + Vite (TypeScript)
+- React Router (routing)
+- TanStack Query (data fetching)
+- Redux (global state — added when needed)
+- React Hook Form + Zod (forms & validation)
+- SCSS + CSS Modules (styling)
+- MUI (UI component library)
+- Axios (HTTP client)
 
 ## Development Commands
 
@@ -23,6 +31,15 @@ Commands for `backend/`:
 ```bash
 npm install       # Install dependencies
 npm run dev       # Start server with nodemon
+```
+
+Commands for `frontend/`:
+
+```bash
+npm install       # Install dependencies
+npm run dev       # Start Vite dev server
+npm run build     # Production build
+npm run lint      # Run ESLint
 ```
 
 ## Architecture
@@ -48,6 +65,64 @@ backend/
 3. Wrap protected endpoints with `verifyToken` middleware.
 
 `src/services/` and `src/utils/` directories exist but are empty — use them for shared business logic and helpers.
+
+## Frontend Architecture
+
+Full decisions and rationale are in [`docs/frontend_structure.md`](docs/frontend_structure.md).
+
+### Folder Structure
+
+```
+frontend/src/
+├── assets/images/{icons,logos}/
+├── modules/                        # Feature pages (auth, vehicles, profile, dashboard)
+│   └── {feature}/
+│       ├── components/
+│       ├── hooks/                  # TanStack Query hooks (useMutation / useQuery)
+│       └── schemas/                # Zod schemas scoped to this module
+├── layout/
+│   ├── PublicLayout.tsx            # Navbar + footer (landing/explore)
+│   └── DashboardLayout.tsx         # Sidebar (profile/my listings)
+├── api/
+│   ├── helpers/
+│   │   ├── axiosClient.ts
+│   │   └── apiPath.ts
+│   └── services/                   # Pure async Axios wrappers (no React)
+│       ├── authService.ts
+│       ├── vehicleService.ts
+│       └── profileService.ts
+├── hooks/                          # Global hooks (useAuth, useDebounce)
+├── routes/routes.tsx
+├── types/
+├── utils/
+│   ├── common-utils.ts
+│   └── validators/zod/             # Shared Zod primitives (email, phone, price)
+├── widgets/                        # Reusable MUI wrappers — presentational only
+├── shared-components/              # Domain-specific reusables (VehicleCard, FilterBar)
+├── store/slices/                   # Redux slices
+├── theme/theme.ts                  # MUI createTheme
+├── styles/
+│   ├── _variables.scss
+│   └── global.scss
+└── constants/messages/messages-fe.json
+```
+
+### Layer Rules
+
+- **Modules:** Compose layout, call hooks/services, render widgets. No direct Axios calls.
+- **`api/services/`:** Pure async functions — no React, no TanStack Query. One file per feature.
+- **Module hooks:** Wrap service calls with `useMutation`/`useQuery`; own caching and `onSuccess` logic.
+- **Widgets:** MUI wrappers — presentational only, no API calls.
+- **`shared-components/`:** Domain-specific reusables — may call API services.
+
+**Data flow:** `Component → module hook (TanStack) → api/service (Axios) → backend`
+
+### Locality Rules
+
+- Hooks, schemas, and SCSS start **local to the module**; promote to a shared location only when a second module actually needs them.
+- Shared Zod primitives (email, phone, price) live in `utils/validators/zod/`.
+- Component styles use `.module.scss` (CSS Modules) to prevent class-name bleed.
+- `styles/` is reserved for global tokens and resets only.
 
 ## Code Style Guidelines
 
