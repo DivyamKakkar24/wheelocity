@@ -129,3 +129,25 @@ frontend/src/
 - Always follow coding best practices
 - Write concise comments for each code section
 - Run npm run lint after making changes
+
+### Widget Usage Rule
+
+**Never import MUI components directly in modules, layouts, or shared-components.**
+Always use the project wrappers from `src/widgets/` instead:
+
+| Use this (widget)    | Instead of (MUI direct)                        |
+| -------------------- | ---------------------------------------------- |
+| `AppButton`          | `@mui/material/Button`                         |
+| `AppCard`            | `@mui/material/Card`                           |
+| `AppInput`           | `@mui/material/TextField`                      |
+| `AppSelect`          | `@mui/material/Select`                         |
+| `AppChip`            | `@mui/material/Chip`                           |
+| `AppDialog`          | `@mui/material/Dialog`                         |
+| `AppLoader`          | `@mui/material/CircularProgress`               |
+| `AppAvatar`          | `@mui/material/Avatar`                         |
+| `AppAlert`           | `@mui/material/Alert`                          |
+| `AppCheckbox`        | `@mui/material/Checkbox`                       |
+
+Import from the barrel: `import { AppButton, AppInput } from '@/widgets';`
+
+Direct MUI imports are **only** allowed inside `src/widgets/` itself. Extending a widget with new props is the right way to add MUI features project-wide.
