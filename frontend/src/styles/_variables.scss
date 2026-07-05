@@ -1,5 +1,20 @@
 $font-family-base: 'Inter', sans-serif;
 
-$color-bg: #ffffff;
-$color-text: #1a1a1a;
-$color-primary: #1976d2;
+// Primitive palette — mirrors src/theme/theme.ts (MUI createTheme palette).
+// Keep hex values identical between the two files. Do not reference these
+// directly in component styles — use the semantic tokens below instead.
+$palette-graphite: #1E2124;
+$palette-teal:     #5EEAD4;
+$palette-gold:     #C9A66B;
+$palette-white:    #FFFFFF;
+$palette-price:    #1D9E75;
+$palette-gray:     #6B7280;
+
+// Semantic tokens — reference these from component/module SCSS.
+$color-surface:          $palette-white;    // listing & detail surfaces
+$color-surface-inverse:  $palette-graphite; // nav, hero, bottom nav
+$color-cta:              $palette-teal;     // primary CTA, active nav state
+$color-badge-verified:   $palette-gold;     // verified/trust badges only
+$color-price:            $palette-price;    // price text
+$color-text-primary:     $palette-graphite;
+$color-text-secondary:   $palette-gray;     // secondary text
