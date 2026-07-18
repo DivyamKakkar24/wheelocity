@@ -1,6 +1,6 @@
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import Select, { SelectProps } from '@mui/material/Select';
+import Select, { type SelectProps } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
 export interface SelectOption {

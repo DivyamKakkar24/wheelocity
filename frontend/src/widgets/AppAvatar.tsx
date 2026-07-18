@@ -1,4 +1,4 @@
-import Avatar, { AvatarProps } from '@mui/material/Avatar';
+import Avatar, { type AvatarProps } from '@mui/material/Avatar';
 
 export interface AppAvatarProps extends AvatarProps {
   /** Display name used to generate initials fallback. */

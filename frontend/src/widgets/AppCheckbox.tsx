@@ -1,4 +1,4 @@
-import Checkbox, { CheckboxProps } from '@mui/material/Checkbox';
+import Checkbox, { type CheckboxProps } from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 export interface AppCheckboxProps extends CheckboxProps {

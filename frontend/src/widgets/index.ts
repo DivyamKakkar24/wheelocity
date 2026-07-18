@@ -7,6 +7,7 @@ export { default as AppChip } from './AppChip';
 export { default as AppDialog } from './AppDialog';
 export { default as AppInput } from './AppInput';
 export { default as AppLoader } from './AppLoader';
+export { default as AppLogo } from './AppLogo';
 export { default as AppSelect } from './AppSelect';
 
 export type { AppButtonProps } from './AppButton';
@@ -14,5 +15,6 @@ export type { AppCardProps } from './AppCard';
 export type { AppCheckboxProps } from './AppCheckbox';
 export type { AppDialogProps } from './AppDialog';
 export type { AppLoaderProps } from './AppLoader';
+export type { AppLogoProps } from './AppLogo';
 export type { AppAvatarProps } from './AppAvatar';
 export type { AppSelectProps, SelectOption } from './AppSelect';

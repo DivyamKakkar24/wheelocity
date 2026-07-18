@@ -1,4 +1,4 @@
-import Card, { CardProps } from '@mui/material/Card';
+import Card, { type CardProps } from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
 export interface AppCardProps extends CardProps {

@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
+import CircularProgress, { type CircularProgressProps } from '@mui/material/CircularProgress';
 
 export interface AppLoaderProps extends CircularProgressProps {
   /** Centers the spinner in a full-height flex container when true (default). */
@@ -11,7 +11,7 @@ export default function AppLoader({ centered = true, ...rest }: AppLoaderProps) 
   if (!centered) return <CircularProgress {...rest} />;
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100%">
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%' }}>
       <CircularProgress {...rest} />
     </Box>
   );

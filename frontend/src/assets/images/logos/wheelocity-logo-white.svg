@@ -1,0 +1,16 @@
+<svg width="369" height="104" viewBox="0 0 369 104" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wheelocity">
+  <g transform="translate(6,4) scale(0.96)">
+    <circle cx="50" cy="50" r="32" fill="none" stroke="#FFFFFF" stroke-width="3.2"></circle>
+    <path d="M18 50 A32 32 0 0 1 82 50" fill="none" stroke="#5EEAD4" stroke-width="7" stroke-linecap="round"></path>
+    <g stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" opacity=".85">
+      <line x1="31.6" y1="31.6" x2="35.9" y2="35.9"></line>
+      <line x1="50" y1="24" x2="50" y2="30"></line>
+      <line x1="68.4" y1="31.6" x2="64.1" y2="35.9"></line>
+    </g>
+    <line x1="50" y1="50" x2="65" y2="30" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round"></line>
+    <line x1="50" y1="50" x2="63" y2="32" stroke="#5EEAD4" stroke-width="2.2" stroke-linecap="round"></line>
+    <circle cx="50" cy="50" r="6" fill="#FFFFFF"></circle>
+    <circle cx="50" cy="50" r="2.4" fill="#C9A66B"></circle>
+  </g>
+  <text x="97" y="66" font-family="&#39;Sora&#39;,&#39;Segoe UI&#39;,Arial,sans-serif" font-size="52" font-weight="600" letter-spacing="-1" fill="#FFFFFF">Wheel<tspan fill="#5EEAD4">ocity</tspan></text>
+</svg>

@@ -3,18 +3,32 @@ $font-family-base: 'Inter', sans-serif;
 // Primitive palette — mirrors src/theme/theme.ts (MUI createTheme palette).
 // Keep hex values identical between the two files. Do not reference these
 // directly in component styles — use the semantic tokens below instead.
-$palette-graphite: #1E2124;
-$palette-teal:     #5EEAD4;
-$palette-gold:     #C9A66B;
-$palette-white:    #FFFFFF;
-$palette-price:    #1D9E75;
-$palette-gray:     #6B7280;
+$palette-graphite:     #1E2124;
+$palette-graphite-950: #141618; // deepest graphite — page bg behind full-bleed dark screens
+$palette-graphite-400: #9AA1AA; // muted text on light or dark surfaces
+$palette-graphite-300: #C3C8CE; // body copy on dark surfaces
+$palette-graphite-200: #E2E5E9; // hairline borders, dividers
+$palette-graphite-100: #F0F2F4; // subtle fills (segmented control track)
+$palette-teal:         #5EEAD4;
+$palette-teal-700:     #0F9E86; // accessible teal for text links on light surfaces
+$palette-gold:         #C9A66B;
+$palette-white:        #FFFFFF;
+$palette-price:        #1D9E75;
+$palette-gray:         #6B7280;
 
 // Semantic tokens — reference these from component/module SCSS.
-$color-surface:          $palette-white;    // listing & detail surfaces
-$color-surface-inverse:  $palette-graphite; // nav, hero, bottom nav
-$color-cta:              $palette-teal;     // primary CTA, active nav state
-$color-badge-verified:   $palette-gold;     // verified/trust badges only
-$color-price:            $palette-price;    // price text
+$color-surface:          $palette-white;        // listing & detail surfaces
+$color-surface-sunken:   $palette-graphite-950;  // page bg behind full-bleed dark screens
+$color-surface-inverse:  $palette-graphite;      // nav, hero, bottom nav
+$color-cta:              $palette-teal;          // primary CTA, active nav state
+$color-auth-glow:        $palette-gold;
+$color-badge-verified:   $palette-gold;          // verified/trust badges only
+$color-price:            $palette-price;         // price text
 $color-text-primary:     $palette-graphite;
-$color-text-secondary:   $palette-gray;     // secondary text
+$color-text-secondary:   $palette-gray;          // secondary text
+$color-text-tertiary:    $palette-graphite-400;  // captions, dividers
+$color-text-inverse-body: $palette-graphite-300; // body copy on dark surfaces
+$color-border:           $palette-graphite-200;
+$color-border-strong:    $palette-graphite-300;
+$color-surface-subtle:   $palette-graphite-100;  // segmented control track
+$color-link:             $palette-teal-700;

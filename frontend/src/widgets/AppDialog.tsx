@@ -1,10 +1,10 @@
-import Dialog, { DialogProps } from '@mui/material/Dialog';
+import Dialog, { type DialogProps } from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 export interface AppDialogProps extends Omit<DialogProps, 'title'> {
   title: string;
