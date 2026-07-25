@@ -92,15 +92,6 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
           </AppButton>
         </form>
 
-        <div className={styles.divider}>
-          <div className={styles.dividerLine} />
-          <span className={styles.dividerLabel}>OR</span>
-          <div className={styles.dividerLine} />
-        </div>
-        <AppButton variant="outlined" size="large" fullWidth onClick={(e) => e.preventDefault()}>
-          Continue with Google
-        </AppButton>
-
         <p className={styles.switchPrompt}>
           {copy.switchPrompt}{' '}
           <a
