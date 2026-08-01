@@ -70,6 +70,7 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
             <div className={styles.inlineRow}>
               <AppCheckbox
                 label="Remember me"
+                color="primary"
                 checked={remember}
                 onChange={(_, checked) => setRemember(checked)}
               />
@@ -82,12 +83,19 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
           {!isLogin && (
             <AppCheckbox
               label="I agree to the Terms & Privacy Policy"
+              color="primary"
               checked={agree}
               onChange={(_, checked) => setAgree(checked)}
             />
           )}
 
-          <AppButton type="submit" size="large" fullWidth>
+          <AppButton
+            type="submit"
+            size="large"
+            color="primary"
+            fullWidth
+            className={styles.submitButton}
+          >
             {copy.submitLabel}
           </AppButton>
         </form>
