@@ -1,0 +1,118 @@
+@use '../../../styles/variables' as *;
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: $color-surface-inverse;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 44px;
+  color: $palette-white;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.42;
+  filter: grayscale(0.35) contrast(1.05);
+}
+
+.wash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(20, 22, 24, 0.94) 0%, rgba(20, 22, 24, 0.55) 46%, rgba(30, 33, 36, 0.3) 100%);
+}
+
+.glow {
+  position: absolute;
+  width: 620px;
+  height: 620px;
+  left: -180px;
+  bottom: -220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, $color-auth-glow 0%, rgba(94, 234, 212, 0) 62%);
+  opacity: 0.6;
+  filter: blur(6px);
+  animation: glowPulse 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 0.85; }
+}
+
+.logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.message {
+  position: relative;
+  max-width: 440px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $palette-teal;
+  margin-bottom: 18px;
+}
+
+.headline {
+  margin: 0 0 16px;
+  font-size: 46px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  color: $palette-white;
+}
+
+.subcopy {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: $color-text-inverse-body;
+  max-width: 380px;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 30px;
+}
+
+.statDivider {
+  width: 1px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.statValue {
+  font-size: 22px;
+  font-weight: 800;
+  color: $palette-white;
+  letter-spacing: -0.01em;
+}
+
+.statStar {
+  color: $color-badge-verified;
+  font-size: 16px;
+}
+
+.statLabel {
+  font-size: 12.5px;
+  color: $color-text-tertiary;
+}

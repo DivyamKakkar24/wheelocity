@@ -1,0 +1,19 @@
+@use '../styles/variables' as *;
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  border-right: 1px solid $color-border;
+  padding: 1.5rem 1rem;
+}
+
+.content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow: auto;
+}

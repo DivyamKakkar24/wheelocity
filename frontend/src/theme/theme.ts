@@ -45,6 +45,9 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: 'Inter, sans-serif',
+    button: {
+      textTransform: 'none'
+    }
   },
 });
 

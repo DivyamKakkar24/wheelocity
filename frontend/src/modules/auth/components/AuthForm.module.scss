@@ -1,0 +1,129 @@
+@use 'sass:color';
+@use '../../../styles/variables' as *;
+
+.panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  background: $color-surface;
+}
+
+.inner {
+  width: 100%;
+  max-width: 380px;
+}
+
+.logo {
+  display: flex;
+  margin-bottom: 32px;
+}
+
+.title {
+  margin: 0 0 6px;
+  font-size: 27px;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  color: $color-text-primary;
+}
+
+.subtitle {
+  margin: 0 0 26px;
+  font-size: 14.5px;
+  color: $color-text-secondary;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: $color-surface-subtle;
+  border-radius: 12px;
+  margin-bottom: 26px;
+}
+
+.segmentButton {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 9px 0;
+  border-radius: 9px;
+  transition: all 0.18s ease;
+  background: transparent;
+  color: $color-text-secondary;
+
+  &[aria-selected='true'] {
+    background: $palette-white;
+    color: $color-text-primary;
+    box-shadow: 0 1px 2px rgba(20, 22, 24, 0.08);
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.submitButton {
+  border-radius: 20px !important;
+  box-shadow: none !important;
+  font-weight: 700 !important;
+
+  &:hover,
+  &:active {
+    box-shadow: none !important;
+    background-color: color.adjust($color-cta, $lightness: -10%) !important;
+  }
+
+}
+
+.inlineRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.forgotLink {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: $color-link;
+  text-decoration: none;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 22px 0;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: $color-border;
+}
+
+.dividerLabel {
+  font-size: 12px;
+  color: $color-text-tertiary;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.switchPrompt {
+  margin: 24px 0 0;
+  text-align: center;
+  font-size: 13.5px;
+  color: $color-text-secondary;
+}
+
+.switchAction {
+  font-weight: 700;
+  color: $color-link;
+  text-decoration: none;
+}
