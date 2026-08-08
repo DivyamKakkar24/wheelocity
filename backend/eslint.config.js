@@ -23,6 +23,22 @@ module.exports = [
     },
   },
   {
+    files: ["src/tests/**/*.js"],
+    languageOptions: {
+      globals: {
+        describe: "readonly",
+        it: "readonly",
+        test: "readonly",
+        expect: "readonly",
+        beforeEach: "readonly",
+        beforeAll: "readonly",
+        afterEach: "readonly",
+        afterAll: "readonly",
+        jest: "readonly",
+      },
+    },
+  },
+  {
     ignores: ["node_modules/"],
   },
 ];
