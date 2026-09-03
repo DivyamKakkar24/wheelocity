@@ -19,7 +19,7 @@ const COPY = {
   },
   register: {
     title: 'Create your account',
-    subtitle: 'Join to save cars, get price alerts, and message verified sellers.',
+    subtitle: 'Join to save cars, get price alerts, and best deals.',
     submitLabel: 'Create account',
     switchPrompt: 'Already have an account?',
     switchAction: 'Sign in',
